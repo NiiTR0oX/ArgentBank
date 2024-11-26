@@ -11,6 +11,10 @@
     width: 1px !important;
     white-space: nowrap !important; /* 3 */
   }
+
+  .header-signin {
+    font-size: 16.5px;
+  }
   
   .main-nav {
     display: flex;
@@ -31,6 +35,12 @@
   .main-nav-item {
     text-decoration: none;
     margin-right: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    p {
+      margin: 2px 0;
+    }
   }
   
   .main-nav-item:hover {
