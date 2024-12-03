@@ -1,0 +1,23 @@
+.features {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: 40px;
+    background-color: #f9f9f9;
+  
+    .feature-item {
+      flex: 1 1 30%;
+      max-width: 300px;
+      margin: 15px;
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s;
+  
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+  }

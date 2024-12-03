@@ -1,13 +1,13 @@
 import "./signin.scss";
 import Button from "./../../components/Button/Button.jsx";
 import { useDispatch, useSelector } from "react-redux";
-// import { loginUser } from "../../redux/loginslice";
+import { loginUser } from "../../redux/loginslice";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function SignIn() {
   const dispatch = useDispatch();
-  const { loading, error, isLoggedIn } = useSelector((state) => state.login);
+  const { loading, loginError, token } = useSelector((state) => state.login);
   const navigate = useNavigate()
 
   const [username, setUsername] = useState("");
@@ -19,7 +19,7 @@ export default function SignIn() {
     navigate("/user")
   };
 
-  if (isLoggedIn) {
+  if (token) {
     return <p>Vous êtes connecté !</p>; // Remplace par une redirection ou un autre composant
   }
 
@@ -54,7 +54,7 @@ export default function SignIn() {
           <Button className="sign-in-button" disabled={loading} btnText="SignIn">
             {loading ? "Loading..." : "Sign In"}
           </Button>
-          {error && <p className="error-message">{error}</p>}
+          {loginError && <p className="error-message">{error}</p>}
         </form>
       </section>
     </main>

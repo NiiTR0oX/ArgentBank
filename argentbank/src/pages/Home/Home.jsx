@@ -1,48 +1,65 @@
 import { useState } from "react";
-import './home.scss'
+import "./home.scss";
 import Hero from "./../../components/Hero/Hero.jsx";
 import Features from "../../components/Features/Features.jsx";
 import iconeChat from "./../../assets/images/icon-chat.png";
+import iconMoney from "./../../assets/images/icon-money.png";
+import iconSecurity from "./../../assets/images/icon-security.png";
 
-function Home (){
-  
+
+function Home() {
   const [data, setData] = useState(null);
+
   return (
     <div>
       <Hero />
       <section className="features">
         <h2 className="sr-only">Features</h2>
-        <Features 
-            image={iconeChat} 
-            title={"You are our #1 priority"} 
-            text={"Need to talk to a representative? You can get in touch through our 24/7 chat or through a phone call in less than 5 minutes."} /> 
-            {/* Le faire Features à la ligne 20 et 37 */}
-        <div className="feature-item">
-          <img
-            src="./img/icon-money.png"
-            alt="Chat Icon"
-            className="feature-icon"
-          />
-          <h3 className="feature-item-title">More savings means higher rates</h3>
-          <p>
-            The more you save with us, the higher your interest rate will be!
-          </p>
-        </div>
-        <div className="feature-item">
-          <img
-            src="./img/icon-security.png"
-            alt="Chat Icon"
-            className="feature-icon"
-          />
-          <h3 className="feature-item-title">Security you can trust</h3>
-          <p>
-            We use top of the line encryption to make sure your data and money
-            is always safe.
-          </p>
-        </div>
+        {/* Première fonctionnalité */}
+        <Features
+          image={iconeChat}
+          title="You are our #1 priority"
+          text="Need to talk to a representative? You can get in touch through our 24/7 chat or through a phone call in less than 5 minutes."
+        />
+        {/* Deuxième fonctionnalité */}
+        <Features
+          image={iconMoney}
+          title="More savings means higher rates"
+          text="The more you save with us, the higher your interest rate will be!"
+        />
+        {/* Troisième fonctionnalité */}
+        <Features
+          image={iconSecurity}
+          title="Security you can trust"
+          text="We use top of the line encryption to make sure your data and money is always safe."
+        />
       </section>
     </div>
-  )
+  );
 }
 
 export default Home;
+
+
+
+// const Home = () => {
+//   const features = featuresJson.features;
+//   console.log(features);
+//   return (
+//     <>
+//       <Hero />
+//       <section className="features">
+//         <h2 className="sr-only">Features</h2>
+//         {features.map((feature, index) => (
+//           <Feature
+//           key={"feature"+index}
+//           paragraph={feature.paragraph}
+//           image={feature.image}
+//           title={feature.title}
+//           alt={feature.alt}
+//           />
+//         ))}
+//         </section>
+//     </>
+//   );
+// };

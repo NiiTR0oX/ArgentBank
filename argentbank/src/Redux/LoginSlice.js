@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-// Simuler une fonction d'authentification asynchrone (remplacer par un appel API réel)
+// Simuler une fonction d'authentification asynchrone
 export const loginUser = createAsyncThunk('login/loginUser', async (credentials, thunkAPI) => {
   const { username, password } = credentials;
   try {
@@ -21,41 +21,38 @@ export const loginUser = createAsyncThunk('login/loginUser', async (credentials,
   }
 });
 
-const initialState = {
-  isLoggedIn: false,
-  token: null,
-  error: null,
-  loading: false,
-};
-
 const loginSlice = createSlice({
   name: 'login',
-  initialState,
+  initialState: {
+    token:"",
+    loginError: null,
+    loading: false,
+  },
   reducers: {
-    logout(state) {
-      state.isLoggedIn = false;
-      state.token = null;
-      state.error = null;
+    login: (state, action) => {
+      state.token=action.payload.token;
+      state.loginError= null;
+    },
+    logout: (state) => {
+      state.token=""
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.pending, (state) => {
         state.loading = true;
-        state.error = null;
+        state.loginError = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.isLoggedIn = true;
         state.token = action.payload;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.loginError = action.payload;
       });
   },
 });
 
-export const { logout } = loginSlice.actions;
-
-// export default loginSlice.reducer;
+export const {login, logout } = loginSlice.actions;
+export default loginSlice.reducer;

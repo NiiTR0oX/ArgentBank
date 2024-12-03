@@ -1,0 +1,22 @@
+// {
+//   "features": [
+//     {
+//       "alt": "Chat icon",
+//       "image": "./icon-chat.png",
+//       "paragraph": "Need to talk to a representative? You can get in touch through our 24/7 chat or through a phone call in less than 5 minutes.",
+//       "title": "You are our #1 priority"
+//     },
+//     {
+//       "alt": "Money icon",
+//       "image": "./icon-money.png",
+//       "paragraph": "The more you save with us, the higher your interest rate will be!",
+//       "title": "More savings means higher rates"
+//     },
+//     {
+//       "alt": "Security icon",
+//       "image": "./icon-security.png",
+//       "paragraph": "We use top of the line encryption to make sure your data and money is always safe.",
+//       "title": "Security you can trust"
+//     }
+//   ]
+// }
