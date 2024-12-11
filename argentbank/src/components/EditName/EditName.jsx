@@ -1,4 +1,12 @@
+import { useState } from "react";
+import Button from "../Button/Button";
+
 export default function EditName () {
+  const [newUserName, setNewUserName] = useState("")
+  const handleForm = () => {
+
+  }
+
   return (
     <main className="main bg-dark">
     <section className="sign-in-content toogle-edit-name">
@@ -9,7 +17,7 @@ export default function EditName () {
           <label htmlFor="username">Username</label>
           <input
             value={newUserName}
-            onChange={handleChangeUserName}
+            onChange={(e) => setNewUserName(e.target.value) }
             type="text"
             id="username"
             placeholder="Tapez votre username"
@@ -21,7 +29,7 @@ export default function EditName () {
             type="text"
             id="firstname"
             disabled
-            value={storeUserProfil.firstName}
+            // value={storeUserProfil.firstName}
           />
         </div>
         <div className="input-wrapper">
@@ -30,12 +38,12 @@ export default function EditName () {
             type="text"
             id="lastname"
             disabled
-            value={storeUserProfil.lastName}
+            // value={storeUserProfil.lastName}
           />
         </div>
-        <Button  btnText={"Save"} className={"sign-in-button"}/>
+        <Button btnText={"Save"} className={"sign-in-button"}/>
       </form>
-        <Button  btnText={"Cancel"} onClick={handleCancel} className={"sign-in-button"}/>
+        <Button btnText={"Cancel"} className={"sign-in-button"}/>
     </section>
     </main>
   );
