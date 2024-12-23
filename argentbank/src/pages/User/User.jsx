@@ -1,18 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserData } from "./../../Redux/UpdateAccountSlice.js";
 import "./user.scss";
 import Transaction from "../../components/Account/Transaction.jsx";
 import EditName from "../../components/EditName/EditName.jsx";
+// import Login from "./../../Redux/LoginSlice.js";
 
 export default function User() {
-  // const dispatch = useDispatch();
+
+  const [displayEditName, setDisplayEditName] =  useState (false)
+  const dispatch = useDispatch();
   // const { user, loading, error } = useSelector((state) => state.updateAccount);
+  const {token} = useSelector((state) => state.login);
 
   // Charger les informations utilisateur lorsque le composant est monté
-  // useEffect(() => {
-  //   dispatch(fetchUserData());
-  // }, [dispatch]);
+  useEffect(() => {
+    console.log(token)
+    // dispatch(fetchUserData());
+    console.log(dispatch(fetchUserData(token)))
+  }, [token]);
 
   // if (loading) {
   //   return <p>Loading user data...</p>;
@@ -27,6 +33,9 @@ export default function User() {
   // }
 
   // rajouter la logique de redux sur le dispatch
+  const handleEditName =() => {
+    setDisplayEditName(!displayEditName)
+  }
 
 
 
@@ -55,18 +64,14 @@ export default function User() {
         {/* En-tête utilisateur */}
         <div className="header">
           <h1>Welcome back<br />Tony Jarvis!</h1>
-          <button className="edit-button">Edit Name</button>
+          <button onClick={handleEditName} className="edit-button">Edit Name</button>
         </div>
   
         {/* Détails utilisateur */}
-        <section className="user-details">
-          <p>
-            {/* <strong>Full Name:</strong> {user.firstName} {user.lastName} */}
-          </p>
-          <p>
-            {/* <strong>Email:</strong> {user.email} */}
-          </p>
-        </section>
+        {displayEditName && <section className="user-details">
+        <EditName />
+        </section> }
+        
   
         {/* Transactions */}
         <section>

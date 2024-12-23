@@ -1,7 +1,7 @@
 import "./signin.scss";
 import Button from "./../../components/Button/Button.jsx";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../../redux/loginslice";
+import { loginUser } from "../../redux/LoginSlice.js";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -10,12 +10,12 @@ export default function SignIn() {
   const { loading, loginError, token } = useSelector((state) => state.login);
   const navigate = useNavigate()
 
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(loginUser({ username, password }));
+    dispatch(loginUser({ email, password }));
     navigate("/user")
   };
 
@@ -30,12 +30,12 @@ export default function SignIn() {
         <h1>Sign In</h1>
         <form onSubmit={handleSubmit}>
           <div className="input-wrapper">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="email">Username</label>
             <input
               type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="input-wrapper">
@@ -51,10 +51,10 @@ export default function SignIn() {
             <input type="checkbox" id="remember-me" />
             <label htmlFor="remember-me">Remember me</label>
           </div>
-          <Button className="sign-in-button" disabled={loading} btnText="SignIn">
+          <Button className="sign-in-button" disabled={loading} btnText="Sign In">
             {loading ? "Loading..." : "Sign In"}
           </Button>
-          {loginError && <p className="error-message">{error}</p>}
+          {loginError && <p className="error-message">{loginError}</p>}
         </form>
       </section>
     </main>

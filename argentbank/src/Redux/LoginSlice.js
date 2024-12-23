@@ -2,12 +2,12 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 // Simuler une fonction d'authentification asynchrone
 export const loginUser = createAsyncThunk('login/loginUser', async (credentials, thunkAPI) => {
-  const { username, password } = credentials;
+  const { email, password } = credentials;
   try {
-    const response = await fetch('/api/login', {
+    const response = await fetch('http://localhost:3001/api/v1/user/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ email, password }),
     });
 
     if (!response.ok) {
@@ -15,7 +15,7 @@ export const loginUser = createAsyncThunk('login/loginUser', async (credentials,
     }
 
     const data = await response.json();
-    return data.token; // Supposons que l'API retourne un token
+    return data.body.token; // Supposons que l'API retourne un token
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
   }
