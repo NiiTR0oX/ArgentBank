@@ -1,25 +1,29 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 // Simuler une API pour récupérer les données utilisateur
-export const fetchUserData = createAsyncThunk(
-  'updateAccount/fetchUserData',
-  async (token, thunkAPI) => {
+export const updateUserData = createAsyncThunk(
+  'updateAccount/updateUserData',
+  async (user, thunkAPI) => {
     // console.log(thunkAPI.getState().login.token)
-    console.log(token)
+    console.log(user)
+    debugger
     try {
       const response = await fetch('http://localhost:3001/api/v1/user/profile', {
-        method: "GET",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, // Ajouter le token si nécessaire
+        Authorization: `Bearer ${user.token}`,
         },
+        body: JSON.stringify({
+          userName: user.username
+        })
       });
 
       if (!response.ok) {
         throw new Error('Failed to fetch user data');
       }
-        const profile = await response.json()
-      return profile.body // Supposons que l'API retourne les informations utilisateur
+      const updateProfileResponse = await response.json()
+      return updateProfileResponse.body
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -32,7 +36,7 @@ const initialState = {
   error: null,
 };
 
-export const updateAccountSlice = createSlice({
+export const updateProfileSlice = createSlice({
   name: 'updateAccount',
   initialState,
   reducers: {},
@@ -53,5 +57,5 @@ export const updateAccountSlice = createSlice({
   },
 });
 
-// export default updateAccountSlice.reducer;
+export default updateProfileSlice.reducer;
 

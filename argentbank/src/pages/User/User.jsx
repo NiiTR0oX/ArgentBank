@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUserData } from "./../../Redux/UpdateAccountSlice.js";
+import { fetchUserData } from "./../../Redux/ProfileSlice.js";
 import "./user.scss";
 import Transaction from "../../components/Account/Transaction.jsx";
 import EditName from "../../components/EditName/EditName.jsx";
@@ -10,15 +10,26 @@ export default function User() {
 
   const [displayEditName, setDisplayEditName] =  useState (false)
   const dispatch = useDispatch();
+  const [user, setUser] = useState (null)
   // const { user, loading, error } = useSelector((state) => state.updateAccount);
   const {token} = useSelector((state) => state.login);
 
-  // Charger les informations utilisateur lorsque le composant est monté
-  useEffect(() => {
-    console.log(token)
-    // dispatch(fetchUserData());
-    console.log(dispatch(fetchUserData(token)))
-  }, [token]);
+    // Charger les informations utilisateur lorsque le composant est monté
+    useEffect(() => {
+      // console.log(token)
+      // dispatch(fetchUserData());
+      const loadUserData = async () => {
+        if(token){
+          const promise = await dispatch(fetchUserData(token))
+          if (fetchUserData.fulfilled.match(promise)) {
+            setUser(promise.payload);
+          } else {
+            console.error('Failed to fetch user data:', promise.payload);
+          }
+        }
+      }
+      loadUserData()
+    }, [dispatch, token]);
 
   // if (loading) {
   //   return <p>Loading user data...</p>;
@@ -32,6 +43,11 @@ export default function User() {
   //   return <p>No user data available.</p>;
   // }
 
+    // if (user) {
+    //   console.log(user)
+    // return <p>{user.email}</p>;
+  // }
+
   // rajouter la logique de redux sur le dispatch
   const handleEditName =() => {
     setDisplayEditName(!displayEditName)
@@ -43,7 +59,7 @@ export default function User() {
   return (
     <>
       {/* Barre de navigation */}
-      <nav className="main-nav">
+      {/* <nav className="main-nav">
         <a className="main-nav-logo" href="./index.html">
           <h1 className="sr-only">Argent Bank</h1>
         </a>
@@ -57,20 +73,20 @@ export default function User() {
             Sign Out
           </a>
         </div>
-      </nav>
+      </nav> */}
   
       {/* Contenu principal */}
       <main className="main bg-dark">
         {/* En-tête utilisateur */}
         <div className="header">
-          <h1>Welcome back<br />Tony Jarvis!</h1>
+          { user && <h1>Welcome back<br />{user.firstName} {user.lastName}!</h1> }
           <button onClick={handleEditName} className="edit-button">Edit Name</button>
         </div>
   
-        {/* Détails utilisateur */}
-        {displayEditName && <section className="user-details">
-        <EditName />
-        </section> }
+        {/* ma condition */}
+        {user && (displayEditName && <section className="user-details"> 
+        <EditName username={user.userName} firstname={user.firstName} lastname={user.lastName}/>
+        </section> )}
         
   
         {/* Transactions */}
