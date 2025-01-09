@@ -2,34 +2,37 @@ import React from "react";
 import "./header.scss";
 import logo from "./../../assets/images/argentBankLogo.png";
 import {Link} from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUserData } from "./../../Redux/ProfileSlice.js";
+import { fetchUserData , logout } from "./../../Redux/ProfileSlice.js";
 
 export default function Header() {
   const dispatch = useDispatch();
-  const [user, setUser] = useState (null)
+  const {user}  = useSelector ((state) => state.profile);
   const {token} = useSelector((state) => state.login);
 
-  const SignOut = () => {
-    
+  const LogOut = () => {
+    dispatch(logout())
   }
   
   useEffect(() => {
         // console.log(token)
         // dispatch(fetchUserData());
-        const loadUserData = async () => {
-          if(token){
-            const promise = await dispatch(fetchUserData(token))
-            if (fetchUserData.fulfilled.match(promise)) {
-              setUser(promise.payload);
-            } else {
-              console.error('Failed to fetch user data:', promise.payload);
-            }
-          }
+        // const loadUserData = async () => {
+        //   if(token){
+        //     const promise = await dispatch(fetchUserData(token))
+        //     if (fetchUserData.fulfilled.match(promise)) {
+        //       setUser(promise.payload);
+        //     } else {
+        //       console.error('Failed to fetch user data:', promise.payload);
+        //     }
+        //   }
+        // }
+        // loadUserData()
+        if (token && !user){
+            dispatch(fetchUserData(token))
         }
-        loadUserData()
-      }, [dispatch, token]);
+      }, [dispatch, token, user]);
 
     return (
         <nav className="main-nav">
@@ -56,7 +59,7 @@ export default function Header() {
             <i className="fa fa-user-circle"></i>
             {user.userName}
           </a>
-          <a className="main-nav-item" href="/" onClick={SignOut}>
+          <a className="main-nav-item" href="/" onClick={LogOut}>
             <i className="fa fa-sign-out"></i>
             Sign Out
           </a>

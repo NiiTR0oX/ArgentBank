@@ -15,8 +15,13 @@ export default function SignIn() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(loginUser({ email, password }));
-    navigate("/user")
+    if (!email && !password){
+      console.log("Veuillez remplir les champs.")
+    } else {
+      dispatch(loginUser({ email, password }));
+      navigate("/user")
+    }
+    
   };
 
   if (token) {

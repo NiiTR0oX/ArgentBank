@@ -2,16 +2,18 @@ import { useState } from "react";
 import Button from "../Button/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUserData } from "../../Redux/UpdateProfileSlice.js";
+import { fetchUserData } from "../../Redux/ProfileSlice.js";
 
 export default function EditName ({username , firstname , lastname}) {
   const [newUserName, setNewUserName] = useState("")
+  const [error, setError] = useState("")
 
   const {token} = useSelector((state) => state.login);
   console.log(token)
 
   const dispatch = useDispatch();
 
-  const handleForm = (event) => {
+  const handleForm = async (event) => {
 // gérer la validation du formulaire des champs
 event.preventDefault()
 
@@ -22,10 +24,28 @@ if (!newUserName.trim()) {
 
 setError(""); // Réinitialiser l'erreur si tout est bon
 
-console.log(newUserName)
+try {
+  if (token) {
+    const promise = await dispatch(updateUserData({ token, username: newUserName }));
+    if (updateUserData.fulfilled.match(promise)) {
+      console.log("Mise à jour réussie :", promise.payload);
+      alert("Nom d'utilisateur mis à jour avec succès !");
+      dispatch(fetchUserData(token))
+    } else {
+      console.error("Erreur lors de la mise à jour :", promise.payload);
+    }
+  } else {
+    setError("Token manquant. Impossible de mettre à jour.");
+  }
+} catch (error) {
+  console.error("Erreur inattendue :", error);
+  setError("Une erreur inattendue est survenue.");
+}
+
+// console.log(newUserName)
 // vérification si UserName n'est pas vide avec un if
 // envoyer le username dans updateuserdata avec le token
-debugger
+// debugger
 // faire l'appel API avec redux dans UpdateAccountSlice {fait}
         // if(token){
         //   const promise = dispatch(updateUserData(token))
@@ -76,6 +96,7 @@ debugger
     <section className="sign-in-content toogle-edit-name">
       <i className="fa fa-user-circle sign-in-icon"></i>
       <h1>Edit User info</h1>
+      {error && <p className="error">{error}</p>}
       <form onSubmit={handleForm} onClick={(event) => event.stopPropagation()}>
         <div className="input-wrapper">
           <label htmlFor="username">Username</label>

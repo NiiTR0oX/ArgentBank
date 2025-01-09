@@ -4,6 +4,7 @@ import { fetchUserData } from "./../../Redux/ProfileSlice.js";
 import "./user.scss";
 import Transaction from "../../components/Account/Transaction.jsx";
 import EditName from "../../components/EditName/EditName.jsx";
+import { useNavigate } from "react-router-dom";
 // import Login from "./../../Redux/LoginSlice.js";
 
 export default function User() {
@@ -13,6 +14,7 @@ export default function User() {
   const [user, setUser] = useState (null)
   // const { user, loading, error } = useSelector((state) => state.updateAccount);
   const {token} = useSelector((state) => state.login);
+  const navigate = useNavigate();
 
     // Charger les informations utilisateur lorsque le composant est monté
     useEffect(() => {
@@ -26,6 +28,8 @@ export default function User() {
           } else {
             console.error('Failed to fetch user data:', promise.payload);
           }
+        } else {
+          navigate("/sign-in");
         }
       }
       loadUserData()

@@ -27,31 +27,40 @@ export const fetchUserData = createAsyncThunk(
   }
 );
 
-const initialState = {
-  user: null,
-  loading: false,
-  error: null,
-};
+// const initialState = {
+//   user: null,
+//   loading: false,
+//   error: null,
+// };
 
 const profileSlice = createSlice({
   name: 'profile',
-  initialState,
-  reducers: {},
+  initialState: {
+    user: null,
+    status: null,
+    error: null,
+  }, 
+  reducers: {
+    logout:(state) => {
+      state.user = null;
+      state.status = null;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchUserData.pending, (state) => {
-        state.loading = true;
-        state.error = null;
+        state.status = "loading";
       })
       .addCase(fetchUserData.fulfilled, (state, action) => {
-        state.loading = false;
         state.user = action.payload;
+        state.status = "succès";
       })
       .addCase(fetchUserData.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
+        state.status = "failed";
+        state.error = action.payload||"fail to fetch data";
       });
   },
 });
 
 export default profileSlice.reducer;
+export const {logout} = profileSlice.actions;
