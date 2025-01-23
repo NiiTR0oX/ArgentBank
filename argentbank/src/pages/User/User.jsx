@@ -5,21 +5,17 @@ import "./user.scss";
 import Transaction from "../../components/Account/Transaction.jsx";
 import EditName from "../../components/EditName/EditName.jsx";
 import { useNavigate } from "react-router-dom";
-// import Login from "./../../Redux/LoginSlice.js";
 
 export default function User() {
 
   const [displayEditName, setDisplayEditName] =  useState (false)
   const dispatch = useDispatch();
   const [user, setUser] = useState (null)
-  // const { user, loading, error } = useSelector((state) => state.updateAccount);
   const {token} = useSelector((state) => state.login);
   const navigate = useNavigate();
 
     // Charger les informations utilisateur lorsque le composant est monté
     useEffect(() => {
-      // console.log(token)
-      // dispatch(fetchUserData());
       const loadUserData = async () => {
         if(token){
           const promise = await dispatch(fetchUserData(token))
@@ -35,49 +31,14 @@ export default function User() {
       loadUserData()
     }, [dispatch, token]);
 
-  // if (loading) {
-  //   return <p>Loading user data...</p>;
-  // }
-
-  // if (error) {
-  //   return <p>Error: {error}</p>;
-  // }
-
-  // if (!user) {
-  //   return <p>No user data available.</p>;
-  // }
-
-    // if (user) {
-    //   console.log(user)
-    // return <p>{user.email}</p>;
-  // }
-
   // rajouter la logique de redux sur le dispatch
   const handleEditName =() => {
     setDisplayEditName(!displayEditName)
   }
 
 
-
-
   return (
     <>
-      {/* Barre de navigation */}
-      {/* <nav className="main-nav">
-        <a className="main-nav-logo" href="./index.html">
-          <h1 className="sr-only">Argent Bank</h1>
-        </a>
-        <div>
-          <a className="main-nav-item" href="./user.html">
-            <i className="fa fa-user-circle"></i>
-            Tony
-          </a>
-          <a className="main-nav-item" href="./index.html">
-            <i className="fa fa-sign-out"></i>
-            Sign Out
-          </a>
-        </div>
-      </nav> */}
   
       {/* Contenu principal */}
       <main className="main bg-dark">

@@ -1,7 +1,7 @@
 import "./signin.scss";
 import Button from "./../../components/Button/Button.jsx";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../../redux/LoginSlice.js";
+import { loginUser } from "../../Redux/LoginSlice.js";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -25,7 +25,8 @@ export default function SignIn() {
   };
 
   if (token) {
-    return <p>Vous êtes connecté !</p>; // Remplace par une redirection ou un autre composant
+    // return <p>Vous êtes connecté !</p>; // Remplace par une redirection ou un autre composant
+    navigate("/user")
   }
 
   return (

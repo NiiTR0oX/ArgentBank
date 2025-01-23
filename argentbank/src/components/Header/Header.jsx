@@ -16,19 +16,7 @@ export default function Header() {
   }
   
   useEffect(() => {
-        // console.log(token)
-        // dispatch(fetchUserData());
-        // const loadUserData = async () => {
-        //   if(token){
-        //     const promise = await dispatch(fetchUserData(token))
-        //     if (fetchUserData.fulfilled.match(promise)) {
-        //       setUser(promise.payload);
-        //     } else {
-        //       console.error('Failed to fetch user data:', promise.payload);
-        //     }
-        //   }
-        // }
-        // loadUserData()
+  
         if (token && !user){
             dispatch(fetchUserData(token))
         }

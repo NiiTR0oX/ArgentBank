@@ -28,28 +28,28 @@ const loginSlice = createSlice({
     loginError: null,
     loading: false,
   },
-  reducers: {
+  reducers: { // ce reducer permet pour mettre à jour l'état du token
     login: (state, action) => {
       state.token=action.payload.token;
       state.loginError= null;
     },
     logout: (state) => {
-      state.token=""
+      state.token="" // ce reducer est utilisé pour vider le token lors de la déconnexion
     },
   },
-  extraReducers: (builder) => {
+  extraReducers: (builder) => { // ExtraReducers sont utilisés pour gérer les actions générées par des thunks asynchrones. il me permet de férer l'état en fonction des différentes étapes requete
     builder
-      .addCase(loginUser.pending, (state) => {
+      .addCase(loginUser.pending, (state) => { // Ce reducer est appelé lorsque l'action asynchrone loginUser commence à s'exécuter. Il active l'indicateur de chargement
         state.loading = true;
         state.loginError = null;
       })
-      .addCase(loginUser.fulfilled, (state, action) => {
-        state.loading = false;
+      .addCase(loginUser.fulfilled, (state, action) => { //Ce reducer est appelé lorsque l'action loginUser réussit (après une connexion réussie).
+        state.loading = false; // Il met à jour l'état du token avec le token renvoyé par l'API et arrête l'indicateur de chargement (loading).
         state.token = action.payload;
       })
-      .addCase(loginUser.rejected, (state, action) => {
-        state.loading = false;
-        state.loginError = action.payload;
+      .addCase(loginUser.rejected, (state, action) => { // Ce reducer est appelé lorsque l'action loginUser échoue (par exemple, si l'API renvoie une erreur de connexion).
+        state.loading = false; // Il arrête l'indicateur de chargement (loading) et enregistre le message d'erreur dans loginError, que vous pourrez afficher à l'utilisateur.
+        state.loginError = action.payload; 
       });
   },
 });
