@@ -11,7 +11,7 @@ export const loginUser = createAsyncThunk('login/loginUser', async (credentials,
     });
 
     if (!response.ok) {
-      throw new Error('Invalid credentials');
+      throw new Error('Password is invalid');
     }
 
     const data = await response.json();
@@ -37,7 +37,7 @@ const loginSlice = createSlice({
       state.token="" // ce reducer est utilisé pour vider le token lors de la déconnexion
     },
   },
-  extraReducers: (builder) => { // ExtraReducers sont utilisés pour gérer les actions générées par des thunks asynchrones. il me permet de férer l'état en fonction des différentes étapes requete
+  extraReducers: (builder) => { // ExtraReducers Gèrent les actions asynchrones (pending, fulfilled, rejected) pour les utilisations HTTP
     builder
       .addCase(loginUser.pending, (state) => { // Ce reducer est appelé lorsque l'action asynchrone loginUser commence à s'exécuter. Il active l'indicateur de chargement
         state.loading = true;

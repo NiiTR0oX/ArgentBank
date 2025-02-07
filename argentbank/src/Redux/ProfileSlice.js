@@ -4,8 +4,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const fetchUserData = createAsyncThunk(
   'profile/fetchUserData',
   async (token, thunkAPI) => {
-    // console.log(thunkAPI.getState().login.token)
-    // console.log(token)
     try {
       const response = await fetch('http://localhost:3001/api/v1/user/profile', {
         method: "GET",

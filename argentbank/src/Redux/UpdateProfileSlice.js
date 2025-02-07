@@ -4,7 +4,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const updateUserData = createAsyncThunk(
   'updateAccount/updateUserData', // Action type
   async (user, thunkAPI) => {
-    console.log(user); // Pour vérifier les données envoyées
     try {
       const response = await fetch('http://localhost:3001/api/v1/user/profile', {
         method: "PUT",
@@ -22,7 +21,6 @@ export const updateUserData = createAsyncThunk(
       }
 
       const updateProfileResponse = await response.json();
-      console.log(updateProfileResponse.body)
       return updateProfileResponse.body; // Retourne les données mises à jour
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message); // Capture l'erreur et la retourne au thunk
@@ -52,7 +50,7 @@ export const updateProfileSlice = createSlice({
       })
       .addCase(updateUserData.rejected, (state, action) => { // Ce reducer est activé lorsque la requête API pour mettre à jour les données utilisateur échoue, c'est-à-dire lorsque l'action updateUserData est rejetée.
         state.loading = false; // state.loading = false : Définit l'état de loading à false, indiquant que l'opération est terminée, bien que l'API ait échoué
-        state.error = action.payload; // state.error = action.payload : Stocke l'erreur retournée par l'API (contenue dans action.payload
+        state.error = action.payload; // state.error = action.payload : Stocke l'erreur retournée par l'API 
       });
   },
 });

@@ -8,11 +8,11 @@ import iconSecurity from "./../../assets/images/icon-security.png";
 
 
 function Home() {
-  const [data, setData] = useState(null);
+  // const [data, setData] = useState(null);
 
   return (
     <div>
-      <Hero />
+      <Hero /> {/* Le début de la page */}
       <section className="features">
         <h2 className="sr-only">Features</h2>
         {/* Première fonctionnalité */}

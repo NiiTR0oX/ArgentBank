@@ -8,25 +8,23 @@ import { useNavigate } from "react-router-dom";
 export default function SignIn() {
   const dispatch = useDispatch();
   const { loading, loginError, token } = useSelector((state) => state.login);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!email && !password){
-      console.log("Veuillez remplir les champs.")
+    if (!email || !password) {
+      alert("Veuillez remplir tous les champs."); // Message simple si les champs sont vides
     } else {
-      dispatch(loginUser({ email, password }));
-      navigate("/user")
+      dispatch(loginUser({ email, password })); // Envoi de l'action Redux
     }
-    
   };
 
+  // Redirection si l'utilisateur est connecté
   if (token) {
-    // return <p>Vous êtes connecté !</p>; // Remplace par une redirection ou un autre composant
-    navigate("/user")
+    navigate("/user");
   }
 
   return (
@@ -60,7 +58,12 @@ export default function SignIn() {
           <Button className="sign-in-button" disabled={loading} btnText="Sign In">
             {loading ? "Loading..." : "Sign In"}
           </Button>
-          {loginError && <p className="error-message">{loginError}</p>}
+          {/* Affichage du message d'erreur */}
+          {loginError && (
+            <p className="error-message">
+              {loginError}
+            </p>
+          )}
         </form>
       </section>
     </main>
